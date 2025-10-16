@@ -28,7 +28,7 @@ export class AuthService {
       storeName: registerDto.storeName,
     })
 
-    return { message: 'Usuario registrado correctamente' };
+     return { message: 'Usuario registrado correctamente' };
   }
 
 
@@ -52,7 +52,6 @@ export class AuthService {
 
     return {
       access_token,
-      message: 'Login exitoso'
     };
   }
 }
