@@ -12,16 +12,21 @@ export class ProductsService {
     private readonly productRepository: Repository<Product>,
   ) {}
 
-  async create(createProductDto: CreateProductDto) {
-    return await this.productRepository.save(createProductDto);
+  async create(createProductDto: CreateProductDto, userId: number) {
+    const product = this.productRepository.create({
+      ...createProductDto,
+      userId
+    })
+
+    return await this.productRepository.save(product);
   }
 
-  async findAll() {
-    return await this.productRepository.find();
+  async findAll(userId: number) {
+    return await this.productRepository.find({ where: { userId } });
   }
 
-  async findOne(id: number) {
-    const product = await this.productRepository.findOneBy({ id });
+  async findOne(id: number, userId: number) {
+    const product = await this.productRepository.findOneBy({ id, userId });
 
     if (!product) {
       throw new NotFoundException('Producto no encontrado');
@@ -30,16 +35,16 @@ export class ProductsService {
     return product;
   }
 
-  async update(id: number, updateProductDto: UpdateProductDto) {
-    const product = await this.findOne(id);
-    
+  async update(id: number, updateProductDto: UpdateProductDto, userId: number) {
+    const product = await this.findOne(id, userId);
+
     Object.assign(product, updateProductDto);
-    
+
     return await this.productRepository.save(product);
   }
 
-  async remove(id: number) {
-    const product = await this.findOne(id);
+  async remove(id: number, userId: number) {
+    const product = await this.findOne(id, userId);
 
     await this.productRepository.remove(product);
     return {

@@ -3,7 +3,7 @@ import { IsNotEmpty, IsNumber, IsString } from "class-validator";
 export class CreateProductDto {
     
     @IsNotEmpty({message: 'El nombre es obligatorio'})
-     @IsString({message: "Nombre no válido"})
+    @IsString({message: "Nombre no válido"})
     name: string;
 
     @IsNotEmpty({message: 'El precio es obligatorio'})
