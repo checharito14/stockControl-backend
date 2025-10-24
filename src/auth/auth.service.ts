@@ -54,4 +54,16 @@ export class AuthService {
       access_token,
     };
   }
+
+  async getUser(email: string) {
+    const user = await this.usersService.findOneByEmail(email);
+    
+    if (!user) {
+      throw new BadRequestException('Usuario no encontrado');
+    }
+
+    const { password, ...userProfile } = user;
+    
+    return userProfile;
+  }
 }
