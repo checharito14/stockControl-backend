@@ -1,4 +1,5 @@
 import { Product } from "src/products/entities/product.entity";
+import { Client } from "src/clients/entities/client.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
@@ -17,5 +18,8 @@ export class User {
     storeName: string
 
     @OneToMany(() => Product, (product) => product.user)
-    products: Product[];    
+    products: Product[];
+
+    @OneToMany(() => Client, (client) => client.user)
+    clients: Client[];
 }
