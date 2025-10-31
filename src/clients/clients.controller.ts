@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Put,
+} from '@nestjs/common';
 import { ClientsService } from './clients.service';
 import { CreateClientDto } from './dto/create-client.dto';
 import { UpdateClientDto } from './dto/update-client.dto';
@@ -23,7 +32,7 @@ export class ClientsController {
   @Get(':id')
   findOne(
     @Param('id', IdValidationPipePipe) id: number,
-    @User() user: JwtUser
+    @User() user: JwtUser,
   ) {
     return this.clientsService.findOne(id, +user.sub);
   }
@@ -32,16 +41,13 @@ export class ClientsController {
   update(
     @Param('id', IdValidationPipePipe) id: number,
     @Body() updateClientDto: UpdateClientDto,
-    @User() user: JwtUser
+    @User() user: JwtUser,
   ) {
     return this.clientsService.update(id, updateClientDto, +user.sub);
   }
 
   @Delete(':id')
-  remove(
-    @Param('id', IdValidationPipePipe) id: number,
-    @User() user: JwtUser
-  ) {
+  remove(@Param('id', IdValidationPipePipe) id: number, @User() user: JwtUser) {
     return this.clientsService.remove(id, +user.sub);
   }
 }

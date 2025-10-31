@@ -13,13 +13,17 @@ export class Client {
     @Column('varchar', { length: 100 })
     lastName: string
 
-    @Column('varchar', { length: 255, unique: true })
+    @Column('varchar', { length: 255 })
     email: string;
 
-    @Column('varchar', { length: 10, unique: true })
+    @Column('varchar', { length: 10 })
     phone: string;
 
-    @ManyToOne(() => User, (user) => user.clients)
+    @ManyToOne(() => User, (user) => user.clients, {
+        onDelete: 'CASCADE',
+        nullable: false
+    })
+    
     @JoinColumn({ name: 'userId' })
     user: User;
 

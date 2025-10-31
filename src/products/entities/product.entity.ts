@@ -1,5 +1,5 @@
 import { User } from "src/users/entities/user.entity";
-import { Column, Entity, JoinColumn, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Product {
@@ -14,11 +14,16 @@ export class Product {
 
     @Column({ type: 'int' })
     stock: number;
+    
+    @Column({type: 'int'})
+    userId: number
+    
+    @ManyToOne(() => User, (user) => user.products, { 
+        onDelete: 'CASCADE',
+        nullable: false 
+    })
 
-    @ManyToMany(() => User, (user) => user.products)
     @JoinColumn({ name: 'userId' }) 
     user: User;
 
-    @Column({type: 'int'})
-    userId: number
 }
