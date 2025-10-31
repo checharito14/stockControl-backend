@@ -10,6 +10,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeOrmConfig } from './config/typeorm.config';
 import { ProductsModule } from './products/products.module';
 import { ClientsModule } from './clients/clients.module';
+import { CouponsModule } from './coupons/coupons.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { ClientsModule } from './clients/clients.module';
     UsersModule,
     ProductsModule,
     ClientsModule,
+    CouponsModule,
   ],
   controllers: [AppController],
   providers: [

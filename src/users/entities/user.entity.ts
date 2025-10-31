@@ -1,10 +1,10 @@
 import { Product } from "src/products/entities/product.entity";
 import { Client } from "src/clients/entities/client.entity";
+import { Coupon } from "src/coupons/entities/coupon.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class User {
-    
     @PrimaryGeneratedColumn()
     id: number
 
@@ -22,4 +22,7 @@ export class User {
 
     @OneToMany(() => Client, (client) => client.user)
     clients: Client[];
+
+    @OneToMany(() => Coupon, (coupon) => coupon.user)
+    coupons: Coupon[];
 }
