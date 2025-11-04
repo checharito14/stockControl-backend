@@ -11,6 +11,7 @@ import { typeOrmConfig } from './config/typeorm.config';
 import { ProductsModule } from './products/products.module';
 import { ClientsModule } from './clients/clients.module';
 import { CouponsModule } from './coupons/coupons.module';
+import { SalesModule } from './sales/sales.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { CouponsModule } from './coupons/coupons.module';
     ProductsModule,
     ClientsModule,
     CouponsModule,
+    SalesModule,
   ],
   controllers: [AppController],
   providers: [
