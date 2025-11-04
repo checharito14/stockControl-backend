@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, IsDateString, IsNumber, Min, Max } from "class-validator";
+import { IsNotEmpty, IsString, IsDateString, IsInt, Min, Max } from "class-validator";
 
 export class CreateCouponDto {
     
@@ -11,7 +11,7 @@ export class CreateCouponDto {
     expirationDate: Date;
 
     @IsNotEmpty({message: 'El porcentaje de descuento es obligatorio'})
-    @IsNumber({maxDecimalPlaces: 2}, {message: 'Porcentaje de descuento no válido'})
+    @IsInt({message: 'El descuento debe ser un número entero'})
     @Min(0, {message: 'El descuento debe ser mayor o igual a 0'})
     @Max(100, {message: 'El descuento no puede ser mayor a 100'})
     discountPercentage: number;
