@@ -9,7 +9,7 @@ export class Product {
     @Column({type: 'varchar', length: 600})
     name: string;
 
-    @Column({type: 'decimal'})
+    @Column({type: 'decimal', precision: 10, scale: 2})
     price: number;
 
     @Column({ type: 'int' })
