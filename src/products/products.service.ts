@@ -7,6 +7,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class ProductsService {
+  private readonly DEFAULT_LOW_STOCK_THRESHOLD = 10;
+
   constructor(
     @InjectRepository(Product)
     private readonly productRepository: Repository<Product>,
@@ -50,5 +52,14 @@ export class ProductsService {
     return {
       message: "Producto eliminado correctamente"
     }
+  }
+
+  async getLowStock(userId: number) {
+    const products = await this.productRepository.find({
+      where: { userId },
+      order: { stock: 'ASC' },
+    });
+
+    return products.filter(product => product.stock <= this.DEFAULT_LOW_STOCK_THRESHOLD);
   }
 }

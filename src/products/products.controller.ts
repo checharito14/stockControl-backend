@@ -6,6 +6,7 @@ import {
   Param,
   Delete,
   Put,
+  Query,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -27,6 +28,11 @@ export class ProductsController {
   @Get()
   findAll(@User() user: JwtUser) {
     return this.productsService.findAll(+user.sub);
+  }
+
+  @Get('low-stock')
+  getLowStock(@User() user: JwtUser) {
+    return this.productsService.getLowStock(+user.sub);
   }
 
   @Get(':id')
