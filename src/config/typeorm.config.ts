@@ -11,6 +11,10 @@ export const typeOrmConfig = (configService: ConfigService) : TypeOrmModuleOptio
     database: configService.get("DATABASE_NAME"),
     ssl: true,
     logging: true,
+    extra: {
+      options: `-c timezone=America/Mazatlan` 
+    },
     entities: [join(__dirname, '../**/*.entity{.ts,.js}')],
+
     synchronize: true
 })
