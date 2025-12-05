@@ -15,6 +15,7 @@ import { SalesModule } from './sales/sales.module';
 import { ReportsModule } from './reports/reports.module';
 import { SeederModule } from './seeder/seeder.module';
 import { AiModule } from './ai/ai.module';
+import { EmailModule } from './email/email.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { AiModule } from './ai/ai.module';
     ReportsModule,
     SeederModule,
     AiModule,
+    EmailModule,
   ],
   controllers: [AppController],
   providers: [
