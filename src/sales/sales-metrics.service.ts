@@ -55,10 +55,12 @@ export class SalesMetricsService {
 
   async getDashboardMetrics(userId: number) {
     const today = this.getTodayRange();
+    const yesterday = this.getYesterdayRange();
     const week = this.getWeekRange();
 
-    const [todayStats, weekStats, topProductsWeek] = await Promise.all([
+    const [todayStats, yesterdayStats, weekStats, topProductsWeek] = await Promise.all([
       this.getSalesStats(today.start, today.end, userId),
+      this.getSalesStats(yesterday.start, yesterday.end, userId),
       this.getSalesStats(week.start, week.end, userId),
       this.getTopProducts(
         week.start,
@@ -73,6 +75,10 @@ export class SalesMetricsService {
         totalSales: todayStats.totalSales.toFixed(2),
         transactionCount: todayStats.transactionCount,
       },
+      yesterday: {
+        totalSales: yesterdayStats.totalSales.toFixed(2),
+        transactionCount: yesterdayStats.transactionCount,
+      },
       week: {
         totalSales: weekStats.totalSales.toFixed(2),
         transactionCount: weekStats.transactionCount,
@@ -84,17 +90,16 @@ export class SalesMetricsService {
   async getLast30DaysActivity(userId: number) {
     const endDate = endOfDay(new Date());
     const startDate = startOfDay(new Date());
-    startDate.setDate(startDate.getDate() - 29); // 30 días incluyendo hoy
+    startDate.setDate(startDate.getDate() - 29);
 
     const sales = await this.getSalesInRange(startDate, endDate, userId);
 
-    // Agrupar por día
+    
     const dailyStats = new Map<
       string,
       { date: string; total: number; count: number }
     >();
 
-    // Inicializar todos los días con 0
     for (let i = 0; i < 30; i++) {
       const date = new Date(startDate);
       date.setDate(date.getDate() + i);
@@ -102,7 +107,6 @@ export class SalesMetricsService {
       dailyStats.set(dateKey, { date: dateKey, total: 0, count: 0 });
     }
 
-    // Agregar datos reales
     sales.forEach((sale) => {
       const dateKey = sale.createdAt.toISOString().split('T')[0];
       const existing = dailyStats.get(dateKey);
@@ -266,6 +270,18 @@ export class SalesMetricsService {
     return {
       start: startOfDay(now),
       end: endOfDay(now),
+    };
+  }
+
+  /**
+   * Obtiene el rango de fechas para el día anterior
+   */
+  private getYesterdayRange() {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    return {
+      start: startOfDay(yesterday),
+      end: endOfDay(yesterday),
     };
   }
 
